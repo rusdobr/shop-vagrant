@@ -34,7 +34,7 @@ echo -e "\n--- Installing PHP ---\n"
     apt-get install php5-common php5-dev php5-cli php5-fpm -y > /dev/null
 
 echo -e "\n--- Installing PHP extensions ---\n"
-    apt-get install curl php5-curl php5-gd php5-mcrypt php5-mysql php5-gettext -y > /dev/null
+    apt-get install curl php5-curl php5-gd php5-mcrypt php5-mysql php-gettext -y > /dev/null
 
 echo -e "\n--- Add Node 6.x rather than 4 ---\n"
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - >> /vagrant/vm_build.log 2>&1
@@ -54,7 +54,10 @@ debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multisel
 apt-get -y install mysql-server phpmyadmin >> /vagrant/vm_build.log 2>&1
 
 echo -e "\n--- Setting up our MySQL user and db ---\n"
-mysql -uroot -p$DBPASSWD -e "CREATE DATABASE $DBNAME" >> /vagrant/vm_build.log 2>&1
+mysql -uroot -p$DBPASSWD -e "DROP DATABASE $DBNAME" >> /vagrant/vm_build.log 2>&1
+mysql -uroot -p$DBPASSWD -e "CREATE DATABASE $DBNAME
+	DEFAULT CHARACTER SET utf8mb4
+  	DEFAULT COLLATE utf8mb4_general_ci" >> /vagrant/vm_build.log 2>&1
 mysql -uroot -p$DBPASSWD -e "grant all privileges on $DBNAME.* to '$DBUSER'@'localhost' identified by '$DBPASSWD'" > /vagrant/vm_build.log 2>&1
 
 echo -e "\n--- Installing PHP-specific packages ---\n"
