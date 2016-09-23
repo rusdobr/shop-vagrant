@@ -57,7 +57,7 @@ echo -e "\n--- Setting up our MySQL user and db ---\n"
 mysql -uroot -p$DBPASSWD -e "DROP DATABASE $DBNAME" >> /vagrant/vm_build.log 2>&1
 mysql -uroot -p$DBPASSWD -e "CREATE DATABASE $DBNAME
 	DEFAULT CHARACTER SET utf8mb4
-  	DEFAULT COLLATE utf8mb4_general_ci" >> /vagrant/vm_build.log 2>&1
+  	DEFAULT COLLATE utf8mb4_unicode_ci" >> /vagrant/vm_build.log 2>&1
 mysql -uroot -p$DBPASSWD -e "grant all privileges on $DBNAME.* to '$DBUSER'@'localhost' identified by '$DBPASSWD'" > /vagrant/vm_build.log 2>&1
 
 echo -e "\n--- Installing PHP-specific packages ---\n"

@@ -14,7 +14,7 @@ include("./cfg/connect.inc.php");
 include("./includes/database/mysql.php");
 
 $sel = NULL;
-$conn = db_connect(DB_HOST, DB_USER, DB_PASS);
+$conn = db_connect(DB_HOST, DB_USER, DB_PASS, DB_CHARSET);
 if ($conn) {
     if (!(db_select_db(DB_NAME))) //database connect failed
     {
